@@ -37,6 +37,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<p><a href=""><button type="button" class="btn btn-outline-info">글쓰기</button></a>
+	<p align="right"><a href=""><button type="button" class="btn btn-outline-info">글쓰기</button></a>
 </body>
 </html>

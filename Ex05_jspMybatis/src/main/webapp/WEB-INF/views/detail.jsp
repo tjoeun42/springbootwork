@@ -12,16 +12,21 @@
 		margin: 0 auto;
 		width: 500px;
 	}
+	.content {
+		padding-left: 50px;
+	}
 </style>
 </head>
 <body>
 	<br>
-	<h4>상세 보기</h4>
+	<h4 align="center">상세 보기</h4>
 	<hr>
+	<div class="content">
 	작성자 :  ${detailBoard.writer}<br>
 	제목 : ${detailBoard.title}	<br>
-	내용 : ${detailBoard.content}	
+	내용 : ${detailBoard.content}
+	</div>
 	<hr>
-	<a href="list"><button type="button" class="btn btn-outline-success">목록보기</button></a>
+	<p align="right"><a href="list"><button type="button" class="btn btn-outline-success">목록보기</button></a></p>
 </body>
 </html>
