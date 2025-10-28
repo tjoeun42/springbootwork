@@ -13,4 +13,10 @@
  		select count(*)
  		  from boardtest
  	</select>
+ 	
+ 	<select id="detailBoard" resultType="com.study.springboot.domain.Board">
+ 		select *
+ 		  from boardtest
+ 		 where boardno = #{boardno} 
+ 	</select>
 </mapper>

@@ -13,6 +13,9 @@
 		margin: 0 auto;
 		width: 800px;
 	}
+	a {
+		text-decoration:none; color:black; cursor:pointer;
+	}
 </style>
 </head>
 <body>
@@ -28,7 +31,7 @@
 		<c:forEach var="b" items="${list}">
 			<tr>
 				<td>${b.boardno}</td>
-				<td>${b.title}</td>
+				<td><a href="detail?boardno=${b.boardno}">${b.title}</a></td>
 				<td>${b.writer}</td>
 				<td><a href=""><button type="button" class="btn btn-outline-danger">삭제</button></a></td>
 			</tr>
