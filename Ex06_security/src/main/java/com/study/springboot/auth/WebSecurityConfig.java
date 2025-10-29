@@ -36,10 +36,11 @@ public class WebSecurityConfig {
 		// 내가 만든폼
 		http.formLogin((formLogin) -> formLogin
 				.loginPage("/loginForm")
-				.loginProcessingUrl("login_check")
+				.loginProcessingUrl("/login_check")
 				.failureUrl("/loginError")  //  /login?error
 				.usernameParameter("username")
 				.passwordParameter("pwd")
+				.defaultSuccessUrl("/", true)
 				.permitAll()
 				);
 		http.logout((logout) -> logout.permitAll());
