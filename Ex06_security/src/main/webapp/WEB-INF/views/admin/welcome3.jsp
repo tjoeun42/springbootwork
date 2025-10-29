@@ -8,5 +8,8 @@
 </head>
 <body>
 	<h2>Welcome : Admin</h2>
+	
+	USER ID : ${pageContext.request.userPrincipal.name} <br><br>
+	<a href="/logout">Log out</a>
 </body>
 </html>

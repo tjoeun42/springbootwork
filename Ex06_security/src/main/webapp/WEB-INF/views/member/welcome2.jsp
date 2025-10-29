@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,5 +9,9 @@
 </head>
 <body>
 	<h2>Welcome : Member</h2>
+	
+	<!-- USER ID : ${pageContext.request.userPrincipal} -->
+	USER ID : ${pageContext.request.userPrincipal.name} <br><br>
+	<a href="/logout">Log out</a>
 </body>
 </html>
