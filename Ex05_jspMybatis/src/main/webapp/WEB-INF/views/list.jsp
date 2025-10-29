@@ -33,10 +33,10 @@
 				<td>${b.boardno}</td>
 				<td><a href="detail?boardno=${b.boardno}">${b.title}</a></td>
 				<td>${b.writer}</td>
-				<td><a href=""><button type="button" class="btn btn-outline-danger">삭제</button></a></td>
+				<td><a href="delete?boardno=${b.boardno}"><button type="button" class="btn btn-outline-danger">삭제</button></a></td>
 			</tr>
 		</c:forEach>
 	</table>
-	<p align="right"><a href=""><button type="button" class="btn btn-outline-info">글쓰기</button></a>
+	<p align="right"><a href="writeForm"><button type="button" class="btn btn-outline-info">글쓰기</button></a>
 </body>
 </html>

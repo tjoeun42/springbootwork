@@ -3,8 +3,12 @@ package com.study.springboot.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.study.springboot.domain.Board;
 import com.study.springboot.service.BoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -91,5 +95,22 @@ public class BoardController {
 		String sBoardno = request.getParameter("boardno");
 		model.addAttribute("detailBoard", boardService.detailBoard(sBoardno));
 		return "detail";
+	}
+	
+	@RequestMapping("/writeForm")
+	public String writeForm() {
+		return "writeForm";
+	}
+	
+	@PostMapping("/write")
+	public String write(Board b) {
+		boardService.insertBoard(b);
+		return "redirect:list";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(@RequestParam(value="boardno") int boardno) {
+		boardService.deleteBoard(boardno);
+		return "redirect:list";
 	}
 }

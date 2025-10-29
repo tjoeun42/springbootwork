@@ -19,4 +19,14 @@
  		  from boardtest
  		 where boardno = #{boardno} 
  	</select>
+ 	
+ 	<insert id="insertBoard">
+ 		insert into boardtest
+ 				values(seq_boardtest.nextval, #{title}, #{writer}, #{content})
+ 	</insert>
+ 	
+ 	<delete id="deleteBoard">
+ 		delete from boardtest
+ 		 where boardno = #{boardno}
+ 	</delete>
 </mapper>
