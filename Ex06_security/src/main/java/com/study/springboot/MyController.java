@@ -31,8 +31,10 @@ public class MyController {
 		return "security/loginForm";
 	}
 	
+	/*
 	@RequestMapping("/loginError")
 	public String loginError() {
 		return "security/loginError";
 	}
+	*/
 }
