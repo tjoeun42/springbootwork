@@ -30,7 +30,18 @@ public class WebSecurityConfig {
 					.anyRequest().authenticated()
 		);
 		
-		http.formLogin((formLogin) -> formLogin.permitAll());
+		// springboot에서 제공해주는 기본 login폼
+		// http.formLogin((formLogin) -> formLogin.permitAll());
+		
+		// 내가 만든폼
+		http.formLogin((formLogin) -> formLogin
+				.loginPage("/loginForm")
+				.loginProcessingUrl("login_check")
+				.failureUrl("/loginError")  //  /login?error
+				.usernameParameter("username")
+				.passwordParameter("pwd")
+				.permitAll()
+				);
 		http.logout((logout) -> logout.permitAll());
 		
 		return http.build();
