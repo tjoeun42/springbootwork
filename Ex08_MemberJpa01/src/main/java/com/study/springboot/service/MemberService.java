@@ -1,5 +1,6 @@
 package com.study.springboot.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,19 @@ public class MemberService {
 	/*
 	 * Optional<> : NullpointerException 발생을 방지하기 위해 사용
 	 */
-	public Optional<Member> select(Long id) {
-		Optional<Member> result = mRepository.findById(id);
-		return result;
+	public Optional<Member> select(Long id) { 
+		return mRepository.findById(id);
+	}
+	
+	public List<Member> selectAll() {
+		return mRepository.findAll();
 	}
 
+	public void delete(Long id) {
+		mRepository.deleteById(id);
+	}
+
+	public Member update(Member member) {
+		return mRepository.save(member);
+	}
 }

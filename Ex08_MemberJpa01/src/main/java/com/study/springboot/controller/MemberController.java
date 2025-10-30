@@ -1,6 +1,7 @@
 package com.study.springboot.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,4 +46,23 @@ public class MemberController {
 		}
 		return "select";
 	}
+	
+	@GetMapping("/selectAll")
+	public String selectAll(Model model) {
+		model.addAttribute("members", mService.selectAll());
+		return "selectAll";
+	}
+	
+	@GetMapping("/delete")
+    public String delete(@RequestParam("id") Long id) {
+        mService.delete(id);        
+        return "redirect:selectAll";
+    }
+
+    @GetMapping("/update")
+    public String update(Member member, Model model) {
+    		member.setCreateDate(LocalDate.now());
+   		model.addAttribute("member", mService.update(member));
+        return "update";
+    }
 }
