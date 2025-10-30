@@ -7,8 +7,9 @@
 		<!-- 
 		<class>exam2.Member2</class>
 		<class>exam2.Member2</class>
-		 -->
 		<class>exam3.Member3</class>
+		-->
+		<class>exam4.Member4</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver" />
