@@ -1,5 +1,7 @@
 package com.study.springboot.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,14 @@ public class MemberService {
 		 */
 		Member rMember = mRepository.save(member);
 		return rMember;
+	}
+
+	/*
+	 * Optional<> : NullpointerException 발생을 방지하기 위해 사용
+	 */
+	public Optional<Member> select(Long id) {
+		Optional<Member> result = mRepository.findById(id);
+		return result;
 	}
 
 }

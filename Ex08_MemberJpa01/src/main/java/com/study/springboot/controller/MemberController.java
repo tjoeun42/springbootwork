@@ -1,6 +1,7 @@
 package com.study.springboot.controller;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,5 +32,17 @@ public class MemberController {
 		Member result = mService.insert(member);
 		model.addAttribute("member", result);
 		return "insert";
+	}
+	
+	@GetMapping("/select")
+	public String select(@RequestParam("id") Long id, Model model) {
+		Optional<Member> result= mService.select(id);
+		// isPresent() : 데이터가 있는지(true) 없는지(false) 체크
+		if(result.isPresent()) {
+			model.addAttribute("member", result.get());  //result.get() -> Optional을 벗겨줌 (Member)
+		} else {
+			model.addAttribute("member", null);
+		}
+		return "select";
 	}
 }
