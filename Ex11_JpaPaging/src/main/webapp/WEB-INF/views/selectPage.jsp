@@ -15,11 +15,11 @@
 	현재 페이지 : ${pageNumber}<p/>
 	현재 페이지의 회원 수 : ${numberOfElement}
 	<hr>
-	
+	<p/>
 	<c:forEach var="m" items="${members}">
 		ID : ${m.id}<p/>
 		NAME : ${m.name}<p/>
-		EMAIL : ${m.email}
+		EMAIL : ${m.email}<hr>
 	</c:forEach>
 </body>
 </html>
