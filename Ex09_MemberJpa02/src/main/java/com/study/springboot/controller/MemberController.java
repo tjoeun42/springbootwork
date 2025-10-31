@@ -40,7 +40,6 @@ public class MemberController {
 	
 	@GetMapping("/selectById")
 	public String selectById(@RequestParam("id") Long id, Model model) {
-		System.out.println(id);
 		Optional<Member> member = mService.selectById(id);
 		if(member.isPresent()) {
 			model.addAttribute("member", member.get());
@@ -56,6 +55,70 @@ public class MemberController {
 		List<Member> list = mService.selectByName(name);
 		model.addAttribute("mList", list);
 		model.addAttribute("title", "Name");
+		return "select_list";
+	}
+
+	@GetMapping("/selectByEmail")
+	public String selectByEmail(@RequestParam("email") String email, Model model) {
+		Member member = mService.selectByEmail(email);
+		model.addAttribute("member", member);
+		model.addAttribute("title", "Email");
+		return "select_one";
+	}
+
+	/*
+	@GetMapping("/selectByEmail")
+	public String selectByEmail(@RequestParam("email") String email, Model model) {
+		Optional<Member> member = mService.selectByEmail(email);
+		if(member.isPresent()) {
+			model.addAttribute("member", member.get());
+		} else {
+			model.addAttribute("member", null);
+		}
+		model.addAttribute("title", "Email");
+		return "select_one";
+	}
+	*/
+
+	@GetMapping("/selectByNameLike")
+	public String selectByNameLike(@RequestParam("name") String name, Model model) {
+		name = "%" + name + "%";
+		List<Member> list = mService.selectByNameLike(name);
+		model.addAttribute("mList", list);
+		model.addAttribute("title", "NameLike");
+		return "select_list";
+	}
+	
+	@GetMapping("/selectByNameLikeNameDesc")
+	public String selectByNameLikeNameDesc(@RequestParam("name") String name, Model model) {
+		name = "%" + name + "%";
+		List<Member> list = mService.selectByNameLikeNameDesc(name);
+		model.addAttribute("mList", list);
+		model.addAttribute("title", "NameLikeDesc");
+		return "select_list";
+	}
+	
+	@GetMapping("/selectByNameLikeOrder")
+	public String selectByNameLikeOrder(@RequestParam("name") String name, Model model) {
+		name = "%" + name + "%";
+		/*
+		 * Sort / Sort.Order
+		   - spring Framework 일부, 데이터 정렬을 지정하는데 사용
+		   - Sort클래스는 하나이상의 Sort.Order 객체를 가지고 있음
+		     ex) 1개 일때
+		         Sort sort = Sort.by(Sort.Order("컬럼명"));
+		         
+		         1개 이상 일 때
+		         Sort sort = Sort.by(
+		         			Sort.Order("컬럼명"),
+		         			Sort.Order("컬럼명"),
+		         			...	
+		         )
+		 */
+		
+		
+		model.addAttribute("mList", list);
+		model.addAttribute("title", "NameLikeDesc");
 		return "select_list";
 	}
 }

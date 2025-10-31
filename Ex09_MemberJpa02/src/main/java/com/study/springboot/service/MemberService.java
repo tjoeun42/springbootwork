@@ -50,4 +50,24 @@ public class MemberService {
 	public List<Member> selectByName(String name) {
 		return mRepository.findByName(name);
 	}
+
+	public Member selectByEmail(String email) {
+		return mRepository.findByEmail(email);
+	}
+	/*
+	public Optional<Member> selectByEmail(String email) {
+		return mRepository.findByEmail(email);
+	}
+	*/
+	
+	public List<Member> selectByNameLike(String name) {
+		return mRepository.findByNameLike(name);
+	}
+
+	public List<Member> selectByNameLikeNameDesc(String name) {
+		return mRepository.findByNameLikeOrderByNameDesc(name);  // 내림차순 정렬
+		// return mRepository.findByNameLikeOrderByName(name); 	// 오름차순 정렬
+		// return mRepository.findByNameLikeOrderByNameDescEmailDesc(name);
+	}
+	
 }

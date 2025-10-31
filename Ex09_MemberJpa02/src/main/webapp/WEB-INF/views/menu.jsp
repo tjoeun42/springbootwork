@@ -14,10 +14,11 @@
 	<a href="selectById?id=1">개별 조회 - byId</a><p/>
 	
 	<hr>
-	
+	selectByNameLikeOrder
 	<a href="selectByName?name=박지훈">개별 조회 - byName</a><p/>
 	<a href="selectByEmail?email=test5@tjoeun.com">개별 조회 - byEmail</a><p/>
-	<a href="selectByNameLike?name=김">리스트 조회 - Name Like</a><p/>
-	<a href="selectByNameLikeNameDesc?name=김">리스트 조회 - Name Like Name Desc</a>
+	<a href="selectByNameLike?name=민">리스트 조회 - Name Like</a><p/>
+	<a href="selectByNameLikeNameDesc?name=민">리스트 조회 - Name Like Name Desc</a>
+	<a href="selectByNameLikeOrder?name=민">리스트 조회 - Name Like Order</a>
 </body>
 </html>
