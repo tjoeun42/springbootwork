@@ -1,9 +1,11 @@
 package com.study.springboot.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,117 +14,83 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.springboot.domain.Member;
+import com.study.springboot.repository.MemberRepository;
 import com.study.springboot.service.MemberService;
 
 @Controller
 public class MemberController {
+
+    private final MemberRepository memberRepository;
 	@Autowired
 	MemberService mService;
+
+    MemberController(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 	
 	@RequestMapping("/")
 	public String root() {
 		return "menu";
 	}
 	
-	@GetMapping("/insert")
-	public String insert() {
-		mService.insert();
-		return "insert";
-	}
-	
-	@GetMapping("/selectAll")
-	public String selectAll(Model model) {
-		List<Member> list = mService.selectAll();
-		model.addAttribute("mList", list);
-		model.addAttribute("title", "All");
-		return "select_list";
-	}
-	
-	@GetMapping("/selectById")
-	public String selectById(@RequestParam("id") Long id, Model model) {
-		Optional<Member> member = mService.selectById(id);
-		if(member.isPresent()) {
-			model.addAttribute("member", member.get());
-		} else {
-			model.addAttribute("member", null);
-		}
-		model.addAttribute("title", "ID");
-		return "select_one";
-	}
-	
-	@GetMapping("/selectByName")
-	public String selectByName(@RequestParam("name") String name, Model model) {
-		List<Member> list = mService.selectByName(name);
-		model.addAttribute("mList", list);
-		model.addAttribute("title", "Name");
-		return "select_list";
-	}
-
-	@GetMapping("/selectByEmail")
-	public String selectByEmail(@RequestParam("email") String email, Model model) {
-		Member member = mService.selectByEmail(email);
-		model.addAttribute("member", member);
-		model.addAttribute("title", "Email");
-		return "select_one";
-	}
-
-	/*
-	@GetMapping("/selectByEmail")
-	public String selectByEmail(@RequestParam("email") String email, Model model) {
-		Optional<Member> member = mService.selectByEmail(email);
-		if(member.isPresent()) {
-			model.addAttribute("member", member.get());
-		} else {
-			model.addAttribute("member", null);
-		}
-		model.addAttribute("title", "Email");
-		return "select_one";
-	}
-	*/
-
 	@GetMapping("/selectByNameLike")
-	public String selectByNameLike(@RequestParam("name") String name, Model model) {
-		name = "%" + name + "%";
-		List<Member> list = mService.selectByNameLike(name);
-		model.addAttribute("mList", list);
-		model.addAttribute("title", "NameLike");
-		return "select_list";
-	}
-	
-	@GetMapping("/selectByNameLikeNameDesc")
-	public String selectByNameLikeNameDesc(@RequestParam("name") String name, Model model) {
-		name = "%" + name + "%";
-		List<Member> list = mService.selectByNameLikeNameDesc(name);
-		model.addAttribute("mList", list);
-		model.addAttribute("title", "NameLikeDesc");
-		return "select_list";
-	}
-	
-	@GetMapping("/selectByNameLikeOrder")
-	public String selectByNameLikeOrder(@RequestParam("name") String name, Model model) {
-		name = "%" + name + "%";
+	public String selectByNameLike(@RequestParam("name") String search,
+								   @RequestParam("page") int page,
+								   Model model)
+	{
+		System.out.println(search);
+		System.out.println(page);
+		String name = search + "%";
 		/*
-		 * Sort / Sort.Order
-		   - spring Framework 일부, 데이터 정렬을 지정하는데 사용
-		   - Sort클래스는 하나이상의 Sort.Order 객체를 가지고 있음
-		     ex) 1개 일때
-		         Sort sort = Sort.by(Sort.Order("컬럼명"));
-		         
-		         1개 이상 일 때
-		         Sort sort = Sort.by(
-		         			Sort.Order("컬럼명"),
-		         			Sort.Order("컬럼명"),
-		         			...	
-		         )
+		 * Pageable 인터페이스
+		   : Spring에서는 Pagination을 지원하는 Pageable인터페이스 제공
+		   - getPageNumber() : 현재 페이지 번호를 반환(0부터 시작)
+		   - getPageSize() : 한 페이지당 최대 항목수를 반환
+		   - getOffset() : 현재 페이지의 시작 위치를 반환
+		   - getSort() : 정렬 정보를 반환
+		   - next() : 다음 페이지 정보를 반환
+		   - previous() : 이전 페이지 정보를 반환
+		   
+		 * PageRequest 클래스
+		   : Spring Data JPA에서 제공하는 Pageable 구현체 중 하나로, 페이지 정보를 생성하는 클래스
+		   - page : 조회할 페이지 번호(0부터 시작)
+		   - size : 한페이지당 최대 항목수
+		   - sort : 정렬정보(생략가능)
+		   - direction : 정렬방향(ASC, DESC)
+		   - properties : 정렬 대상 속성명
+		   
+		   > 생성자
+		   PageRequest(int page, int size)
+		   PageRequest(int page, int size, Sort sort)
+		   PageRequest(int page, int size, Sort.Direction direction, String... properties)
 		 */
-		// Sort sort = Sort.by(Sort.Order.desc("name"));
-		Sort sort = Sort.by(
-				Sort.Order.desc("name"),
-				Sort.Order.desc("email")
-				);
-		List<Member> list = mService.selectByNameLikeOrder(name, sort);
-		model.addAttribute("mList", list);
-		model.addAttribute("title", "NameLikeDesc");
-		return "select_list";
+		
+		int nPage = page-1;
+		Sort sort = Sort.by(Sort.Order.desc("name"));
+		
+		// Pageable pageable = PageRequest.of(nPage, 10);
+		/*
+		Pageable pageable = PageRequest.ofSize(10)
+									   .withPage(nPage)
+									   .withSort(sort);
+		*/
+		Pageable pageable = PageRequest.of(nPage, 10, sort);
+		Page<Member> result = mService.selectByNameLike(name, pageable);
+		
+		List<Member> content = result.getContent();	// 실제 객체가 담긴 List<member>반환
+		long totalElement = result.getTotalElements();	// 총 레코드 수
+		int totalPages = result.getTotalPages();		// 총 페이지 수
+		int size = result.getSize();	// 1페이지당 들어갈 레코드 수
+		int pageNumber = result.getNumber() + 1;		// 현재 페이지(0부터 시작)
+		int numberOfElement = result.getNumberOfElements();	// 현재 페이지의 레코드 수
+		
+		model.addAttribute("members", content);
+		model.addAttribute("totalElement", totalElement);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("size", size);
+		model.addAttribute("pageNumber", pageNumber);
+		model.addAttribute("numberOfElement", numberOfElement);
+		
+		return "selectPage";
 	}
 }

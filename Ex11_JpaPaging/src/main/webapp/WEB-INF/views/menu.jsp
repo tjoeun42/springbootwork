@@ -7,18 +7,9 @@
 <title>Member JPA #02</title>
 </head>
 <body>
-	<h1>Member JPA #02</h1>
-	
-	<a href="insert">데이터 추가</a><p/>
-	<a href="selectAll">전체 조회</a><p/>
-	<a href="selectById?id=1">개별 조회 - byId</a><p/>
-	
-	<hr>
-	selectByNameLikeOrder
-	<a href="selectByName?name=박지훈">개별 조회 - byName</a><p/>
-	<a href="selectByEmail?email=test5@tjoeun.com">개별 조회 - byEmail</a><p/>
-	<a href="selectByNameLike?name=민">리스트 조회 - Name Like</a><p/>
-	<a href="selectByNameLikeNameDesc?name=민">리스트 조회 - Name Like Name Desc</a>
-	<a href="selectByNameLikeOrder?name=민">리스트 조회 - Name Like Order</a>
+	<h1>JPA Paging</h1>
+	<a href="selectByNameLike?name=user&page=1">Name Like 조회 : 1페이지</a><p/>
+	<a href="selectByNameLike?name=user&page=2">Name Like 조회 : 2페이지</a><p/>
+	<a href="selectByNameLike?name=user&page=3">Name Like 조회 : 3페이지</a><p/>
 </body>
 </html>
