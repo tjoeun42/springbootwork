@@ -1,8 +1,5 @@
 package com.study.springboot.domain;
 
-import java.time.LocalDate;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,11 +23,11 @@ public class Member {
 	)
 	@GeneratedValue(generator="s01")
 	private Long id;
-	private String username;
+	private String name;
 	private String email;
 	
-	public Member(String email, String username) {
-		this.username = username;
+	public Member(String email, String name) {
+		this.name = name;
 		this.email = email;
 	}	
 }

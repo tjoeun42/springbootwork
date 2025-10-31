@@ -5,15 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Member JPA #02</title>
 </head>
 <body>
-	<h1>Member JPA #01 - selectAll</h1>
-	<c:forEach var="member" items="${members}">
-		아이디 : ${member.id}<p/>
-		이름 : ${member.username}<p/>
-		날짜 : ${member.createDate}<p/>
-		<hr>
+	<h1>Member JPA #02 - Select ${title}</h1>
+	<c:forEach var="m" items="${mList}">
+		아이디 : ${m.id}<p/>
+		이름 : ${m.name}<p/>
+		이메일 : ${m.email}<hr>
 	</c:forEach>
 </body>
 </html>

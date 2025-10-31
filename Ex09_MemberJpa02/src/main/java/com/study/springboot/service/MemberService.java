@@ -38,4 +38,16 @@ public class MemberService {
 		user = new Member("test9@tjoeun.com", "장민재");
 		mRepository.save(user);
 	}
+
+	public List<Member> selectAll() {
+		return mRepository.findAll();
+	}
+
+	public Optional<Member> selectById(Long id) {
+		return mRepository.findById(id);
+	}
+
+	public List<Member> selectByName(String name) {
+		return mRepository.findByName(name);
+	}
 }
