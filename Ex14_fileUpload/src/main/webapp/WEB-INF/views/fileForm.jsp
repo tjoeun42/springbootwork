@@ -8,7 +8,7 @@
 </head>
 <body>
 	<form action="upload" method="post" enctype="multipart/form-data">
-		파일 : <input type="file" name="files" multiple="true">
+		파일 : <input type="file" name="files" multiple="true"><p/>
 		<input type="submit" value="File Upload">
 	</form>
 </body>
