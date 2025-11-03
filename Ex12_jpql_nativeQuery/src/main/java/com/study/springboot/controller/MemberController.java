@@ -37,4 +37,17 @@ public class MemberController {
 		model.addAttribute("members", result);
 		return "selectNameList";
 	}
+
+	@GetMapping("/selectByNameLike2")
+	public String selectByNameLike2(@RequestParam("name") String search,
+								   Model model)
+	{
+		String name = search + "%";
+		Sort sort = Sort.by(Sort.Order.asc("id"));
+		List<Member> result = mService.selectMember2(name, sort);
+		System.out.println(result.size());
+		model.addAttribute("members", result);
+		return "selectNameList";
+	}
+
 }

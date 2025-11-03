@@ -9,5 +9,10 @@
 </head>
 <body>
 	<h1>JPQL_NativeQuery</h1>
+	<c:forEach var="m" items="${members}">
+		아이디 : ${m.id}<p/>
+		이름 : ${m.name}<p/>
+		이메일 : ${m.email}<hr>
+	</c:forEach>
 </body>
 </html>

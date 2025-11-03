@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.study.springboot.domain.Member;
@@ -17,6 +18,10 @@ public class MemberService {
 
 	public List<Member> selectMember1(String name) {
 		return mRepository.findMembers(name);
+	}
+
+	public List<Member> selectMember2(String name, Sort sort) {
+		return mRepository.findMembers(name, sort);
 	}
 	
 }
