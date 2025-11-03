@@ -49,5 +49,34 @@ public class MemberController {
 		model.addAttribute("members", result);
 		return "selectNameList";
 	}
+	
+	@GetMapping("/selectByNameLike3")
+	public String selectByNameLike3(@RequestParam("name") String search,
+									@RequestParam("page") int page,
+								   Model model)
+	{
+		String name = search + "%";
+		Sort sort = Sort.by(Sort.Order.desc("id"));
+		Pageable pageable = PageRequest.of(page-1, 10, sort);
+		Page<Member> result = mService.selectMember3(name, pageable);
+
+		model.addAttribute("members", result.getContent());
+		model.addAttribute("totalElements", result.getTotalElements());
+		model.addAttribute("totalPages", result.getTotalPages());
+		model.addAttribute("size", result.getSize());
+		model.addAttribute("pageNumber", result.getNumber()+1);
+
+		return "selectNamePage";
+	}
+	
+	@GetMapping("/selectByNameLike4")
+	public String selectByNameLike4(@RequestParam("name") String search,
+								   Model model)
+	{
+		String name = search + "%";
+		List<Member> result = mService.selectMember4(name);
+		model.addAttribute("members", result);
+		return "selectNameList";
+	}
 
 }

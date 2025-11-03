@@ -23,5 +23,12 @@ public class MemberService {
 	public List<Member> selectMember2(String name, Sort sort) {
 		return mRepository.findMembers(name, sort);
 	}
-	
+
+	public Page<Member> selectMember3(String name, Pageable pageable) {
+		return mRepository.findMembers(name, pageable);
+	}
+
+	public List<Member> selectMember4(String name) {
+		return mRepository.findMembersNative(name);
+	}
 }
