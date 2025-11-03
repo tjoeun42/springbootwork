@@ -19,14 +19,8 @@ import com.study.springboot.service.MemberService;
 
 @Controller
 public class MemberController {
-
-    private final MemberRepository memberRepository;
 	@Autowired
 	MemberService mService;
-
-    MemberController(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
 	
 	@RequestMapping("/")
 	public String root() {
