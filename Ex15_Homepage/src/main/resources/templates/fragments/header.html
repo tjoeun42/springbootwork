@@ -32,13 +32,23 @@
 			<table>
 				<tr>
 					<td colspan="2">
-						<h3 th:text="${loginUser.name}">님 환영합니다</h3>
-						<!-- <h3 th:text="${loginUser.name} + '님 환영합니다'"></h3> -->
+						<!--/*  thymeleaf의 주석 
+						<h3 th:text="${loginUser.name}">님 환영합니다</h3> ->  이름만 나옴
+						* 문자열 합치기 
+						<h3 th:text="${loginUser.name} + '님 환영합니다'"></h3> 
+						<h3 th:text="|${loginUser.name}님 환영합니다|"></h3>
+						*/-->
+						<h3>[[${loginUser.name}]]님 환영합니다</h3>  <!--/* [[문자로 인식]] */-->
+						<!--/* 
+						 	data 변수에 = <b>Hello</b> 들어있다면
+						 	[[${data}]]  -> <b>Hello</b>  -> <b>도 문자로 인식
+						 	[(${data})]  -> Hello  -> 굵은 글씨로 출력
+						*/-->
 					</td>
 				</tr>
 				<tr>
 					<td><a href="">마이페이지 / </a></td>
-					<td><a href="">로그아웃</a></td>
+					<td><a href="logout">로그아웃</a></td>
 				</tr>
 			</table>
 		</div>
