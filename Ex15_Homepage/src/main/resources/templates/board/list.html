@@ -7,8 +7,29 @@
 </head>
 <body>
 	<div th:replace="~{ fragments/header.html :: fragment-menu }"></div>
+	<br>
 	<h2 align="center">게 시 판</h2>
-	<div>
+	<div align="center">
+		<table>
+			<thead>
+				<tr>
+					<th width="50">번호</th>
+					<th width="150">제목</th>
+					<th width="70">작성자</th>
+					<th width="50">조회수</th>
+					<th width="70">작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="board, state: ${list}">
+					<td th:text="${board.bno}"></td>
+					<td th:text="${board.title}"></td>
+					<td th:text="${board.writer}"></td>
+					<td th:text="${board.count}"></td>
+					<td th:text="${board.createDate}"></td>
+				</tr>
+			</tbody>
+		</table>
 		<div th:if="${loginUser != null}">
 			<a href="insertForm">글쓰기</a>
 		</div>
