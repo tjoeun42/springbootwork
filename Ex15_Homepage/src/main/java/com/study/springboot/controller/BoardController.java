@@ -51,10 +51,10 @@ public class BoardController {
 	
 	@GetMapping("/detailForm")
 	public String detailForm(@RequestParam("bno") Long bno, Model model) {
-		Board board= bService.selectDetail(bno).get();
-		List<Reply> replyList = rService.selectAll(bno);
-		model.addAttribute("board", board);
-		model.addAttribute("reply", replyList);
+		//Board board= bService.selectDetail(bno).get();
+		//List<Reply> replyList = rService.selectAll(bno);
+		model.addAttribute("board", bService.selectDetail(bno).get());
+		model.addAttribute("reply", rService.selectAll(bno));
 		return "board/detailForm";
 	}
 	

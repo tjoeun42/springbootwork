@@ -32,7 +32,7 @@
 				포함된 게시글 리스트를 반환함 
 				-->
 				<tr th:each="board, state: ${boardPage}">
-					<td th:text="${boardPage.totalElements-boardPage.nowPage*boardPage.size-state.index}"></td>
+					<td th:text="${boardPage.totalElements-boardPage.number*boardPage.size-state.index}"></td>
 					<td><a th:href="@{detailForm(bno=${board.bno})}" th:text="${board.title}"></a></td>
 					<td th:text="${board.writer}"></td>
 					<td th:text="${board.count}"></td>

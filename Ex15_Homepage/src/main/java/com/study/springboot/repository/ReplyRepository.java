@@ -10,6 +10,6 @@ import com.study.springboot.domain.Reply;
 @Repository
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
-	List<Reply> findAllByRefBnoOderByRnoDesc(Long bno);
+	List<Reply> findAllByRefBnoOrderByRnoDesc(Long bno);
 
 }

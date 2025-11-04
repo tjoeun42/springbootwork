@@ -15,6 +15,10 @@ public class ReplyService {
 	ReplyRepository rRepository;
 
 	public List<Reply> selectAll(Long bno) {
-		return rRepository.findAllByRefBnoOderByRnoDesc(bno);
+		return rRepository.findAllByRefBnoOrderByRnoDesc(bno);
+	}
+
+	public Reply rinsert(Reply reply) {
+		return rRepository.save(reply);		
 	}
 }
