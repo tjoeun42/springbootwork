@@ -7,9 +7,8 @@
 <body>
 	<div th:fragment="fragment-menu">
 		<h1 align="center">SpringBoot HomePage</h1>
-		<!-- 로그인 전 -->
-		<div align="right">
-			<form action="" method="post">
+		<div th:if="${loginUser == null}" align="right">
+			<form action="login" method="post">
 				<table>
 					<tr>
 						<td>아이디</td>
@@ -29,12 +28,12 @@
 				</table>
 			</form>
 		</div>
-		<!-- 로그인 후 
-		<div align="right">
+		<div th:if="${loginUser != null}" align="right">
 			<table>
 				<tr>
 					<td colspan="2">
-						<h3>??님 환영합니다</h3>
+						<h3 th:text="${loginUser.name}">님 환영합니다</h3>
+						<!-- <h3 th:text="${loginUser.name} + '님 환영합니다'"></h3> -->
 					</td>
 				</tr>
 				<tr>
@@ -43,7 +42,7 @@
 				</tr>
 			</table>
 		</div>
-		-->
+
 		<br>
 		<table align="center" class="nav-area">
 			<tr>
