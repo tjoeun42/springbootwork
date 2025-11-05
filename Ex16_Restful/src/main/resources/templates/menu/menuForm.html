@@ -23,7 +23,7 @@
 	
 	POST /menu				: 메뉴 한건 등록
 	
-	PUT	/menu				: 메뉴 한건 전체수정
+	PUT	  /menu				: 메뉴 한건 전체수정
 	PATCH /menu 				: 메뉴 한건 일부분만 수정
 	
 	DELETE	/menu/10			: 메뉴 한건 삭제
@@ -32,7 +32,25 @@
 	<h2 align="center">MENU RESTful API</h2>
 	
 	<div align="center">
-		MENU RESTful API
+		<!-- 1. GET /menu : 전체메뉴조회 -->
+		<div>
+			<h3>전체메뉴</h3>
+			<button type="button" id="menuAllList">조회</button>
+		</div>
+		<div id="menu-result"></div>
+		<hr>
+		
+		<script>
+			$("#menuAllList").on('click', () => {
+				$.ajax({
+					url: '/menu',
+					success:function(result) {
+						console.log(result);
+					},
+					error:console.log
+				})
+			})
+		</script>
 	</div>
 </body>
 </html>
