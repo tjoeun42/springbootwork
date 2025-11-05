@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="/webjars/jquery/3.7.1/jquery.js"></script>
+<link href="/css/index.css" rel="stylesheet">
+<title>MENU RESTful API</title>
+<style>
+	td {
+		height: 30px;
+	}
+</style>
+</head>
+<body>
+<!-- 
+	GET /menu				: 전체메뉴조회
+	GET /menu/type/kr		: 한식만 조회
+	GET /menu/type/ch		: 중식만 조회
+	GET /menu/type/jp		: 일식만 조회
+	GET /menu/taste/mild		: 순한맛만 조회
+	GET /menu/taste/hot		: 매운맛만 조회
+	GET /menu/10				: 10번메뉴 하나만 조회(한건 조회)
+	
+	POST /menu				: 메뉴 한건 등록
+	
+	PUT	/menu				: 메뉴 한건 전체수정
+	PATCH /menu 				: 메뉴 한건 일부분만 수정
+	
+	DELETE	/menu/10			: 메뉴 한건 삭제
+ -->
+ 	<div th:replace="~{ fragments/header.html :: fragment-menu }"></div>
+	<h2 align="center">MENU RESTful API</h2>
+	
+	<div align="center">
+		MENU RESTful API
+	</div>
+</body>
+</html>
