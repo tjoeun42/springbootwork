@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.springboot.domain.Menu;
+import com.study.springboot.domain.Taste;
 import com.study.springboot.domain.Type;
 import com.study.springboot.service.MenuService;
 
@@ -28,5 +29,11 @@ public class MenuRestController {
 	public List<Menu> findByType(@PathVariable(name="type") Type type) {
 		return mService.findByType(type);
 	}
-	
+
+	@GetMapping("/type/{type}/taste/{taste}")
+	public List<Menu> findByTypeAndTaste(@PathVariable(name="type") Type type,
+										 @PathVariable(name="taste") Taste taste)
+	{
+		return mService.findByTypeAndTaste(type, taste);
+	}
 }

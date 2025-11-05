@@ -107,6 +107,21 @@
 		<div id="menuTypeTaste-result"></div>
 		<hr>
 		
+		<script>
+			$("#typeTaste").on('submit', e => {
+				e.preventDefault();
+				const type = e.target.type.value;
+				const taste = e.target.taste.value;
+				$.ajax({
+					url: `/menu/type/${type}/taste/${taste}`,
+					success (result) {
+						menuTable("#menuTypeTaste-result", result);
+					},
+					error : console.log
+				})
+			})
+		</script>
+		
 		
 		<script type="text/javascript">
 			const menuTable = (selector, data) => {
