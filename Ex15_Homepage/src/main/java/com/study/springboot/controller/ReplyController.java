@@ -1,5 +1,7 @@
 package com.study.springboot.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +17,9 @@ public class ReplyController {
 	ReplyService rService;
 	
 	@GetMapping("/rinsert")
-	public @ResponseBody boolean rinsert(Reply reply) {
+	public @ResponseBody List<Reply> rinsert(Reply reply) {
 		Reply result = rService.rinsert(reply);
-		if(result == null) {
-			return false;
-		} else {
-			return true;
-		}
+		List<Reply> reReply = rService.selectAll(reply.getRefBno());
+		return reReply;
 	}
 }

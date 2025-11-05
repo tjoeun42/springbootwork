@@ -15,6 +15,8 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.study.springboot.domain.Member;
 import com.study.springboot.service.MemberService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @SessionAttributes("loginUser")
 // @SessionAttributes({"loginUser", "", ""})  sesseion cope가 여러개 일 때
@@ -24,6 +26,9 @@ public class MemberController {
 	
 	@Autowired
 	PasswordEncoder pEncoder;
+	
+	@Autowired
+	HttpSession session;
 	
 	@RequestMapping("/")
 	public String root() {
@@ -60,7 +65,12 @@ public class MemberController {
 		if(loginUser != null && pEncoder.matches(member.getPassword(), loginUser.getPassword())) {
 			model.addAttribute("loginUser", loginUser);  // session scope로 바꾸려면 상단에 @SessionAttributes 넣기
 		}
-		return "redirect:/";
+		
+		String boardDetailUrl = (String)session.getAttribute("boardDetailUrl");
+		if(boardDetailUrl == null) {
+			boardDetailUrl = "/";
+		}
+		return "redirect:" + boardDetailUrl;
 	}
 	/*
 	 * @SessionAttributes + model을 통해 로그인 정보를 관리하는 경우

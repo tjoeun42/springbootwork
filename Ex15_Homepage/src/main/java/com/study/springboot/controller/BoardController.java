@@ -1,7 +1,5 @@
 package com.study.springboot.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +14,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.study.springboot.domain.Board;
 import com.study.springboot.domain.Member;
-import com.study.springboot.domain.Reply;
 import com.study.springboot.service.BoardService;
 import com.study.springboot.service.ReplyService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @SessionAttributes("loginUser")
@@ -62,15 +61,27 @@ public class BoardController {
 	}
 	
 	@GetMapping("/detailForm")
-	public String detailForm(@RequestParam("bno") Long bno, Model model) {
+	public String detailForm(@RequestParam("bno") Long bno, HttpSession session ,Model model) {
 		//Board board= bService.selectDetail(bno).get();
 		//List<Reply> replyList = rService.selectAll(bno);
 		model.addAttribute("board", bService.selectDetail(bno).get());
 		model.addAttribute("reply", rService.selectAll(bno));
+		
+		session.setAttribute("boardDetailUrl", "/detailForm?bno=" + bno);
 		return "board/detailForm";
 	}
 	
-	
-	
-	
+	@PostMapping("/update")
+	public String update(Board board) {
+		System.out.println("bno : " + board.getBno());
+		Board r = bService.update(board);
+		System.out.println("결과 title : " + r.getTitle());
+		return "redirect:list";
+	}
+
+	@GetMapping("/delete")
+	public String delete(@RequestParam("bno") Long bno) {
+		bService.delete(bno);
+		return "redirect:list";
+	}
 }

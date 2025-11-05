@@ -42,7 +42,7 @@
 				</tr>
 				<tr>
 					<td>작성일</td>
-					<td><input name="createDate" th:value="*{#temporals.format(board.createDate, 'yyyy-MM-dd')}" readonly></td>
+					<td><input th:value="*{#temporals.format(board.createDate, 'yyyy-MM-dd')}" readonly></td>
 				</tr>
 				<tr>
 					<td>조회수</td>
@@ -55,6 +55,7 @@
 					</td>
 				</tr>
 			</table>
+			<input type="hidden" name="bno" th:value="${board.bno}">
 		</form>
 		<p/>
 		<br>
@@ -71,7 +72,7 @@
 				</tr>
 				<tr>
 					<td colspan="3" style="text-align:left">
-						댓글의 총 갯수 : <span th:text="${reply.size()}"></span>
+						댓글의 총 갯수 : <span id="replySize" th:text="${reply.size()}"></span>
 					</td>
 				</tr>
 				<tr>
@@ -80,7 +81,7 @@
 					<th>작성일</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="replylist">
 				<tr th:each="r : ${reply}">
 					<td th:text="${r.writer}"></td>
 					<td th:text="${r.content}" style="text-align:left"></td>
@@ -92,16 +93,33 @@
 	
 	<script>
 		$(() => {
+			$("#delete").on('click', function() {
+				let result = confirm("정말 삭제하시겠습니까?");
+				if(result) {
+					location.href = 'delete?bno=[[${board.bno}]]';
+				}
+			})
 			$("#insertReply").on('click', function() {
 				$.ajax({
 					url: "rinsert",
 					data: {
 						refBno: "[[${board.bno}]]",
-						writer: "[[${loginUser.id}]]",
+						writer: "[[${loginUser != null ? loginUser.id : ''}]]",
 						content: $("#replyContent").val()
 					},
 					success:function(result) {
 						console.log(result);
+						let replyHtml = '';
+						$.each(result, function(index, reply) {
+							replyHtml += '<tr>';
+							replyHtml += '<td>' + reply.writer + '</td>';
+							replyHtml += '<td>' + reply.content + '</td>';
+							replyHtml += '<td>' + reply.createDate.substring(0,10) + '</td>';
+							replyHtml += '</tr>';
+						});
+						$('#replylist').html(replyHtml);
+						$('#replySize').text(result.length);
+						$('#replyContent').val("");
 					},
 					error:function() {
 						console.log("댓글작성 실패");
