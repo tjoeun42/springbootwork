@@ -93,18 +93,14 @@
 		<!-- 3. GET   /menu/type/KR/teast/MILD -->
 		<div>
 			<h3>메뉴 타입과 맛별 조회</h3>
-			<form name="typeTaste" id="typeTaste">
-				<div>
-					<input type="radio" menu="type" value="KR">한식
-					<input type="radio" menu="type" value="CH">중식
-					<input type="radio" menu="type" value="JP">일식
-				</div>
-				&emsp;&emsp;<span>|</span>&emsp;&emsp;
-				<div>
-					<input type="radio" menu="taste" value="MILD">순한맛
-					<input type="radio" menu="taste" value="HOT">매운맛
-				</div>
-				<br>
+			<form name="typeTaste" id="typeTaste"><br>
+				<input type="radio" name="type" value="KR">한식
+				<input type="radio" name="type" value="CH">중식
+				<input type="radio" name="type" value="JP">일식
+				&emsp;<span>|</span>&emsp;
+				<input type="radio" name="taste" value="MILD">순한맛
+				<input type="radio" name="taste" value="HOT">매운맛
+				<br><br>
 				<button class="btn" id="typeTasteBtn">조 회</button>
 			</form>
 		</div><br>
