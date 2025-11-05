@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.study.springboot.domain.Menu;
+import com.study.springboot.domain.Type;
 import com.study.springboot.service.MenuService;
 
 @RestController
@@ -20,6 +22,11 @@ public class MenuRestController {
 	@GetMapping
 	public List<Menu> menuAllList() {
 		return mService.menuAllList();
+	}
+	
+	@GetMapping("/type/{type}")
+	public List<Menu> findByType(@PathVariable(name="type") Type type) {
+		return mService.findByType(type);
 	}
 	
 }
