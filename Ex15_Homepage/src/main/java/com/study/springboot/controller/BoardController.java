@@ -31,9 +31,21 @@ public class BoardController {
 	ReplyService rService;
 	
 	@GetMapping("list")
-	public String list(@RequestParam(value="nowPage", defaultValue="1") int nowPage, Model model) {
-		Page<Board> list = bService.list(PageRequest.of(nowPage-1, 10, Sort.by(Sort.Direction.DESC, "bno")));
+	public String list(@RequestParam(value="nowPage", defaultValue="0") int nowPage, Model model) {
+		Page<Board> list = bService.list(PageRequest.of(nowPage, 2, Sort.by(Sort.Direction.DESC, "bno")));
+		
+		int pagePerBlock = 2;  // [1]~[5] 
+		/*
+		int endPage = nowPage + pagePerBlock;
+		if(list.getTotalPages() < endPage) {
+			endPage = list.getTotalPages();
+		}
+		*/
+		int endPage = Math.min(list.getTotalPages(), nowPage + pagePerBlock);
+								
 		model.addAttribute("boardPage", list);
+		model.addAttribute("endPage", endPage);
+		model.addAttribute("nowPage", nowPage);  // 선택(안넘겨주면 사용시 boardPage.number 를 이용하면 됨)
 		return "board/list";
 	}
 	

@@ -40,6 +40,24 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<!-- 페이징 처리 -->
+		<div align="center">
+			<a th:if="${nowPage > 0}" th:href="@{list(nowPage=${nowPage-1})}">Prev...</a>
+			<!-- 
+				#numbers라는 숫자 포맷 메소드 지원
+				#numbers.sequence()메소드 : python의 range(start, end, step)와 같다
+			 -->
+			<span th:each="pageNumber : ${#numbers.sequence(nowPage, endPage-1)} ">
+				<strong th:if="${pageNumber == nowPage}" 
+						th:text="|[${pageNumber+1}]|"></strong>
+				<a th:unless="${pageNumber == nowPage}" 
+					th:href="@{list(nowPage=${pageNumber})}" 
+					th:text="|[${pageNumber+1}]|"></a>
+			</span>
+			<a th:if="${nowPage < boardPage.totalPages-1}" th:href="@{list(nowPage=${nowPage+1})}">...Next</a>
+		</div>
+		
 		<div th:if="${loginUser != null}">
 			<a href="insertForm">글쓰기</a>
 		</div>
