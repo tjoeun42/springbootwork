@@ -125,7 +125,7 @@
 		<!-- /menu/10   10번 메뉴 하나만 가져오기 -->	
 		<div>
 			<h3>ID로 검색</h3>
-			<input name="id" id="id"><br>
+			<input name="id" id="id"><br><br>
 			<button class="btn" id="idSelect">조 회</button>
 		</div><br>
 		<div id="idSelect-result"></div>
@@ -138,7 +138,7 @@
 					url: `/menu/${value}`,
 					success(result) {
 						console.log(result);
-						// oneTable("#idSelect-result", result);
+						oneTable("#idSelect-result", result);
 					},
 					error(jqXHR, textStatus, errorMsg) {
 						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
@@ -149,7 +149,60 @@
 						  > jqXHR.statusText : "error"
 						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
 						*/
+						console.log(`jqXHR : ${jqXHR}`);
+						console.log(`jqXHR.status : ${jqXHR.status}`);
+						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
+						
+						console.log(`textStatus : ${textStatus}`);
+						console.log(`errorMsg : ${errorMsg}`);
+						
+						if(jqXHR.status == 404) {
+							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
+						}
 					}
+				})
+			})
+		</script>
+		
+		<!-- 5. POST /menu : 메뉴 한건 등록 -->
+		<div>
+			<h3>메뉴 등록(POST)</h3>
+			<form name="menuEnrollFrm" id="menuEnrollFrm">
+				음식점 : <input name="restaurant" required><br>
+				메뉴명 : <input name="name" required><br>
+				가 &ensp;격 : <input type="number" name="price" required><br>
+				<input type="radio" name="type" value="KR">한식
+				<input type="radio" name="type" value="CH">중식
+				<input type="radio" name="type" value="JP">일식
+				<br>
+				<input type="radio" name="taste" value="MILD">순한맛
+				<input type="radio" name="taste" value="HOT">매운맛
+				<br><br>
+				<button class="btn">등 록</button>
+			</form>
+		</div><br>
+		<hr>
+		
+		<script>
+			$('#menuEnrollFrm').on('submit', e => {
+				e.preventDefault();
+				const menu = {
+					restaurant : e.target.restaurant.value,
+					name : e.target.name.value,
+					price : e.target.price.value,
+					type : e.target.type.value,
+					taste : e.target.taste.value,
+				};
+				$.ajax({
+					url : `/menu`,
+					method : 'POST',
+					data : JSON.stringify(menu),
+					contentType : 'application/json; charset=utf-8',
+					success(result, textStatus, jqXHR) {
+						console.log(`result : ${result}`);
+						console.log(`textStatus : ${textStatus}`);	// success
+					},
+					error: console.log
 				})
 			})
 		</script>
