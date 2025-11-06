@@ -37,6 +37,11 @@ public class MenuService {
 		return mRepository.save(menu);
 	}
 
+	public Menu updateMenu(Menu menu) {
+		return mRepository.save(menu);
+	}
 
-
+	public void deleteMenu(Long id) {
+		mRepository.deleteById(id);
+	}
 }

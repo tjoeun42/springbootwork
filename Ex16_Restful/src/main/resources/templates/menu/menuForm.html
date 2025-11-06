@@ -242,8 +242,8 @@
 				<button class="btn">수 정</button>
 				<input type="hidden" name="id">
 			</form>
-		</div>
-		
+		</div><br>
+		<hr>
 		<script>
 			$("#menuSearchFrm").on('submit', e => {
 				e.preventDefault();
@@ -265,6 +265,9 @@
 						if(jqXHR.status == 404) {
 							alert('해당 ID는 없습니다');
 						}
+					},
+					complete() {
+						e.target.reset();
 					}
 				})
 			})
@@ -293,13 +296,44 @@
 						e.target.reset();
 					}
 				})
-				
-				
 			})
-			
 		</script>
 		
-
+		<!-- 7. DELETE	 /menu/10	: 메뉴 10번 삭제 -->
+		<div>
+			<h3>메뉴 삭제하기</h3>
+			<p>메뉴번호로 삭제</p>
+			<form name="menuDeleteFrm" id="menuDeleteFrm">
+				메뉴번호 : <input name="id"><br><br>
+				<button class="btn">조 회</button>
+			</form>
+		</div>
+		
+		<script>
+			$('#menuDeleteFrm').on('submit', e => {
+				e.preventDefault();
+				const id = e.target.id.value;
+				$.ajax({
+					url : `/menu/${id}`,
+					method : 'DELETE',
+					success(result, t, jqXHR) {
+						console.log(result);
+						if(jqXHR.status == 204) {
+							alert('삭제 되었습니다');
+						}
+					},
+					error(jqXHR) {
+						if(jqXHR.status == 404) {
+							alert('조회한 ID는 존재하지 않습니다');
+						}
+					},
+					complete() {
+						e.target.reset();
+					}
+				})
+			})
+		</script>
+		
 		<script type="text/javascript">
 			const menuTable = (selector, data) => {
 				const container = document.querySelector(selector);
