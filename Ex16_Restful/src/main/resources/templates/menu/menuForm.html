@@ -133,7 +133,34 @@
 		
 		<script>
 			$("#idSelect").on('click', () => {
-				// findById($("#id").val());
+				const value = $('#id').val();
+				$.ajax({
+					url: `/menu/${value}`,
+					success(result) {
+						console.log(result);
+						oneTable('#idSelect-result', result);
+					},
+					error(jqXHR, textStatus, errorMsg) {
+						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
+						/*
+						- jqXHR 파라미터
+						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
+						  > jqXHR.status : 500
+						  > jqXHR.statusText : "error"
+						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
+						*/
+						console.log(`jqXHR : ${jqXHR}`);
+						console.log(`jqXHR.status : ${jqXHR.status}`);
+						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
+						
+						console.log(`textStatus : ${textStatus}`);
+						console.log(`errorMsg : ${errorMsg}`);
+						
+						if(jqXHR.status == 404) {
+							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
+						}
+					}
+				})
 			})
 		</script>
 		
@@ -220,7 +247,26 @@
 		<script>
 			$("#menuSearchFrm").on('submit', e => {
 				e.preventDefault();
-				findById2(e.target.id.value);
+				const id = e.target.id.value;
+				$.ajax({
+					url: `/menu/${id}`,
+					success(result) {
+						console.log(result);
+						const frm = document.menuUpdateFrm;
+						const {id, restaurant, price, name, type, taste} = result;
+						frm.id.value = id;
+						frm.restaurant.value = restaurant;
+						frm.price.value = price;
+						frm.name.value = name;
+						frm.type.value = type;
+						frm.taste.value = taste;
+					},
+					error(jqXHR) {
+						if(jqXHR.status == 404) {
+							alert('해당 ID는 없습니다');
+						}
+					}
+				})
 			})
 			
 			$('#menuUpdateFrm').on('submit', e => {
@@ -253,10 +299,7 @@
 			
 		</script>
 		
-		
-		
-		
-		
+
 		<script type="text/javascript">
 			const menuTable = (selector, data) => {
 				const container = document.querySelector(selector);
@@ -313,72 +356,7 @@
 								 </tbody></table><br>`;
 				container.innerHTML = value;
 			}
-			
-			const findById2 = id => {
-				$.ajax({
-					url: `/menu/${id}`,
-					success(result) {
-						console.log(result);
-						const frm = document.menuUpdateFrm;
-						const {id, restaurant, price, name, type, taste} = result;
-						frm.id.value = id;
-						frm.restaurant.value = restaurant;
-						frm.price.value = price;
-						frm.name.value = name;
-						frm.type.value = type;
-						frm.taste.value = taste;
-					},
-					error(jqXHR, textStatus, errorMsg) {
-						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
-						/*
-						- jqXHR 파라미터
-						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
-						  > jqXHR.status : 500
-						  > jqXHR.statusText : "error"
-						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
-						*/
-						console.log(`jqXHR : ${jqXHR}`);
-						console.log(`jqXHR.status : ${jqXHR.status}`);
-						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
-						
-						console.log(`textStatus : ${textStatus}`);
-						console.log(`errorMsg : ${errorMsg}`);
-						
-						if(jqXHR.status == 404) {
-							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
-						}
-					}
-				})
-			}
-			
-			const findByid = id => {
-				$.ajax({
-					url: `/menu/${id}`,
-					success(result) {
-						console.log(result);
-					},
-					error(jqXHR, textStatus, errorMsg) {
-						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
-						/*
-						- jqXHR 파라미터
-						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
-						  > jqXHR.status : 500
-						  > jqXHR.statusText : "error"
-						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
-						*/
-						console.log(`jqXHR : ${jqXHR}`);
-						console.log(`jqXHR.status : ${jqXHR.status}`);
-						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
-						
-						console.log(`textStatus : ${textStatus}`);
-						console.log(`errorMsg : ${errorMsg}`);
-						
-						if(jqXHR.status == 404) {
-							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
-						}
-					}
-				})
-			}
+
 		</script>
 	</div>
 	<br><br><br><br><br><br><br><br><br><br>
