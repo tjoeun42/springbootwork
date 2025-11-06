@@ -122,6 +122,39 @@
 			})
 		</script>
 		
+		<!-- /menu/10   10번 메뉴 하나만 가져오기 -->	
+		<div>
+			<h3>ID로 검색</h3>
+			<input name="id" id="id"><br>
+			<button class="btn" id="idSelect">조 회</button>
+		</div><br>
+		<div id="idSelect-result"></div>
+		<hr>
+		
+		<script>
+			$("#idSelect").on('click', () => {
+				const value = $("#id").val();
+				$.ajax({
+					url: `/menu/${value}`,
+					success(result) {
+						console.log(result);
+						// oneTable("#idSelect-result", result);
+					},
+					error(jqXHR, textStatus, errorMsg) {
+						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
+						/*
+						- jqXHR 파라미터
+						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
+						  > jqXHR.status : 500
+						  > jqXHR.statusText : "error"
+						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
+						*/
+					}
+				})
+			})
+		</script>
+		
+		
 		
 		<script type="text/javascript">
 			const menuTable = (selector, data) => {
@@ -153,14 +186,36 @@
 				value += `</tbody></table><br>`;
 				container.innerHTML = value;
 			}
+			
+			const oneTable = (selector, data) => {
+				const container = document.querySelector(selector);
+				let value = `<table id="list-area" align="center">
+								<thead>
+									<tr>
+										<th width="50px">번호</th>
+										<th width="100px">메뉴명</th>
+										<th width="70px">가격</th>
+										<th width="80px">레스토랑명</th>
+										<th width="70px">맛</th>
+										<th width="70px">종류</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>${data.id}</td>
+										<td>${data.name}</td>
+										<td>${data.price}</td>
+										<td>${data.restaurant}</td>
+										<td>${data.taste}</td>
+										<td>${data.type}</td>
+								    </tr>
+								 </tbody></table><br>`;
+				container.innerHTML = value;
+			}
 		</script>
 	</div>
 	<br><br><br><br><br><br><br><br><br><br>
 </body>
 </html>
-
-
-
-
 
 

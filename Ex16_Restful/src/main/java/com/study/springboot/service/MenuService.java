@@ -1,6 +1,7 @@
 package com.study.springboot.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,11 @@ public class MenuService {
 	public List<Menu> findByTypeAndTaste(Type type, Taste taste) {
 		return mRepository.findByTypeAndTaste(type, taste);
 	}
+
+	public Optional<Menu> findById(Long id) {
+		return mRepository.findById(id);
+	}
+
+
 
 }
