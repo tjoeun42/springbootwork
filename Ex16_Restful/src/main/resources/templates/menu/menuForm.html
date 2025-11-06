@@ -133,34 +133,7 @@
 		
 		<script>
 			$("#idSelect").on('click', () => {
-				const value = $("#id").val();
-				$.ajax({
-					url: `/menu/${value}`,
-					success(result) {
-						console.log(result);
-						oneTable("#idSelect-result", result);
-					},
-					error(jqXHR, textStatus, errorMsg) {
-						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
-						/*
-						- jqXHR 파라미터
-						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
-						  > jqXHR.status : 500
-						  > jqXHR.statusText : "error"
-						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
-						*/
-						console.log(`jqXHR : ${jqXHR}`);
-						console.log(`jqXHR.status : ${jqXHR.status}`);
-						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
-						
-						console.log(`textStatus : ${textStatus}`);
-						console.log(`errorMsg : ${errorMsg}`);
-						
-						if(jqXHR.status == 404) {
-							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
-						}
-					}
-				})
+				// findById($("#id").val());
 			})
 		</script>
 		
@@ -201,11 +174,86 @@
 					success(result, textStatus, jqXHR) {
 						console.log(`result : ${result}`);
 						console.log(`textStatus : ${textStatus}`);	// success
+						const location = jqXHR.getResponseHeader('Location');
+						console.log(`location : ${location}`);
+
+						const id = location.split('/').pop();
+						console.log(`id : ${id}`);
+						
+						if(jqXHR.status == 201) {
+							alert('메뉴가 등록 되었습니다');
+						}
 					},
-					error: console.log
+					error: console.log,
+					complete() {
+						e.target.reset();
+					}
 				})
 			})
 		</script>
+		
+		<!-- 6. PUT	 /menu	: 메뉴 한건 전체수정 -->
+		<div>
+			<h3>메뉴 수정하기</h3>
+			<p>메뉴번호 검색 후 수정</p>
+			<form name="menuSearchFrm" id="menuSearchFrm">
+				메뉴번호 : <input name="id"><br><br>
+				<button class="btn" id="idSearch">조 회</button>
+			</form>
+			<br><br>
+			<form name="menuUpdateFrm" id="menuUpdateFrm">
+				음식점 : <input name="restaurant" required><br>
+				메뉴명 : <input name="name" required><br>
+				가 &ensp;격 : <input type="number" name="price"><br>
+				<input type="radio" name="type" value="KR">한식
+				<input type="radio" name="type" value="CH">중식
+				<input type="radio" name="type" value="JP">일식
+				<br>
+				<input type="radio" name="taste" value="MILD">순한맛
+				<input type="radio" name="taste" value="HOT">매운맛
+				<br><br>
+				<button class="btn">수 정</button>
+				<input type="hidden" name="id">
+			</form>
+		</div>
+		
+		<script>
+			$("#menuSearchFrm").on('submit', e => {
+				e.preventDefault();
+				findById2(e.target.id.value);
+			})
+			
+			$('#menuUpdateFrm').on('submit', e => {
+				e.preventDefault();
+				const frmData = new FormData(e.target);
+				const menu = {};
+				frmData.forEach((value, key) => {
+					menu[key] = value;
+				});
+				
+				$.ajax({
+					url:`/menu`,
+					data: JSON.stringify(menu),
+					method: 'PUT',
+					contentType: 'application/json; charset=utf-8',
+					success(result) {
+						console.log(result);
+						if(result != null) {
+							alert("수정 되었습니다");
+						}
+					},
+					error: console.log,
+					complete() {
+						e.target.reset();
+					}
+				})
+				
+				
+			})
+			
+		</script>
+		
+		
 		
 		
 		
@@ -264,6 +312,72 @@
 								    </tr>
 								 </tbody></table><br>`;
 				container.innerHTML = value;
+			}
+			
+			const findById2 = id => {
+				$.ajax({
+					url: `/menu/${id}`,
+					success(result) {
+						console.log(result);
+						const frm = document.menuUpdateFrm;
+						const {id, restaurant, price, name, type, taste} = result;
+						frm.id.value = id;
+						frm.restaurant.value = restaurant;
+						frm.price.value = price;
+						frm.name.value = name;
+						frm.type.value = type;
+						frm.taste.value = taste;
+					},
+					error(jqXHR, textStatus, errorMsg) {
+						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
+						/*
+						- jqXHR 파라미터
+						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
+						  > jqXHR.status : 500
+						  > jqXHR.statusText : "error"
+						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
+						*/
+						console.log(`jqXHR : ${jqXHR}`);
+						console.log(`jqXHR.status : ${jqXHR.status}`);
+						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
+						
+						console.log(`textStatus : ${textStatus}`);
+						console.log(`errorMsg : ${errorMsg}`);
+						
+						if(jqXHR.status == 404) {
+							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
+						}
+					}
+				})
+			}
+			
+			const findByid = id => {
+				$.ajax({
+					url: `/menu/${id}`,
+					success(result) {
+						console.log(result);
+					},
+					error(jqXHR, textStatus, errorMsg) {
+						// jquery ajax의 error은 jqXHR, textStatus, errorMsg 의 3개의 파라미터 제공
+						/*
+						- jqXHR 파라미터
+						  비동기 처리하는 주 객체는 XMLHttpRequest를 json으로 처리한 것이 첫번째 인자로 들어옴
+						  > jqXHR.status : 500
+						  > jqXHR.statusText : "error"
+						  > jqXHR.responseText : url의 full response(url의 반환된 결과들)
+						*/
+						console.log(`jqXHR : ${jqXHR}`);
+						console.log(`jqXHR.status : ${jqXHR.status}`);
+						console.log(`jqXHR.statusText : ${jqXHR.statusText}`);
+						
+						console.log(`textStatus : ${textStatus}`);
+						console.log(`errorMsg : ${errorMsg}`);
+						
+						if(jqXHR.status == 404) {
+							$('#idSelect-result').html(`<p style="color:red">해당 ID는 없습니다</p>`);
+						}
+					}
+				})
 			}
 		</script>
 	</div>
