@@ -41,6 +41,9 @@ dependencies {
 	implementation 'org.webjars:jquery:3.7.1'
 	// 비밀번호 암호화 설정
 	implementation 'org.springframework.security:spring-security-crypto:6.5.6'
+	
+	// restful api의 POST 사용시
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.14'
 }
 
 tasks.named('test') {
