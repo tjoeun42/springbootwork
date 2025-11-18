@@ -2,6 +2,8 @@ package com.study.shop.domain;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,7 +23,10 @@ public class Member {
 	private String password;
 	@NonNull
 	private String name;
+	
+//	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
+	
 	private String gender;
 	private String phone;
 	private String address;

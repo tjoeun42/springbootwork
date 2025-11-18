@@ -1,11 +1,15 @@
 package com.study.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.study.shop.domain.Member;
 import com.study.shop.service.MemberService;
 
 @RestController
@@ -20,5 +24,9 @@ public class MemberController {
 		return !memberService.emailCheck(email);
 	}
 	
-	
+	@PostMapping("/signup")
+	public ResponseEntity<String> insertMember(@RequestBody Member member) {
+		System.out.println(member);
+		return ResponseEntity.ok("회원가입 성공");
+	}
 }
