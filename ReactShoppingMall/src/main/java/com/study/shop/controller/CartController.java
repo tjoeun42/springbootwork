@@ -1,6 +1,9 @@
 package com.study.shop.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +21,14 @@ public class CartController {
 	
 	@PostMapping("/addCart")
 	public String addCart(@RequestBody Cart cart) {
-		System.out.println(cart);
+		cart.setMemId("tjoeun");
+		Cart result = cartService.addCart(cart);
 		return "ok";
+	}
+	
+	@GetMapping("/getCart")
+	public List<Cart> getCart() {
+		return cartService.getCart("tjoeun");
 	}
 
 }
