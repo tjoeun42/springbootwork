@@ -19,5 +19,9 @@ public class MemberService {
 		memberRepository.save(member);
 	}
 
+	public Member login(Member member) {
+		return memberRepository.findByEmailAndPassword(member.getEmail(), member.getPassword());
+	}
+
 	
 }
