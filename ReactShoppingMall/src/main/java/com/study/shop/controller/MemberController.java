@@ -1,6 +1,7 @@
 package com.study.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,11 @@ public class MemberController {
 	@PostMapping("/signup")
 	public ResponseEntity<String> insertMember(@RequestBody Member member) {
 		System.out.println(member);
-		return ResponseEntity.ok("회원가입 성공");
+		try {
+			memberService.insertMember(member);
+			return ResponseEntity.ok("회원가입 성공");
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패");
+		}
 	}
 }
