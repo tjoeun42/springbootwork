@@ -15,14 +15,21 @@ public class CartService {
 	@Autowired
 	CartRepository cartRepository;
 
-	public Cart addCart(Cart cart) {
-		Optional<Cart> result = cartRepository.findById(cart.getId());
-		if(result.isPresent()) {
-			Cart resultCart = result.get();
-			resultCart.setCount(resultCart.getCount() + cart.getCount());
-			return cartRepository.save(resultCart);
-		} else {
-			return cartRepository.save(cart);
+	public boolean addCart(Cart cart) {
+		List<Cart> result = cartRepository.findByMemIdOrderById(cart.getMemId());
+
+		try {
+			for(Cart c : result) {
+				if(c.getId().equals(cart.getId())) {
+					c.setCount(c.getCount() + cart.getCount());
+					cartRepository.save(c);
+					return true;
+				} 
+			}
+			cartRepository.save(cart);
+			return true;
+		} catch(Exception e) {
+			return false;
 		}
 	}
 

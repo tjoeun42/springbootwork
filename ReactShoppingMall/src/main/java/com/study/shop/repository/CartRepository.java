@@ -9,7 +9,5 @@ import com.study.shop.domain.Cart;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long> {
-
 	List<Cart> findByMemIdOrderById(String memId);
-
 }

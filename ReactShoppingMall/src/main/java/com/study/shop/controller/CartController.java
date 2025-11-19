@@ -22,14 +22,16 @@ public class CartController {
 	
 	@PostMapping("/addCart")
 	public String addCart(@RequestBody Cart cart) {
-		Cart result = cartService.addCart(cart);
-		return "ok";
+		boolean result = cartService.addCart(cart);
+		if(result) {
+			return "ok";
+		} else {
+			return "fail";
+		}
 	}
 	
 	@GetMapping("/getCart")
 	public List<Cart> getCart(@RequestParam(value="memId") String memId) {
-		System.out.println(memId);
 		return cartService.getCart(memId);
 	}
-
 }
